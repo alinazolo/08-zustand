@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { useId } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { createNote } from "@/lib/api";
-import { useNoteStore } from "@/lib/store/NoteStore";
+import {useNoteStore} from "@/lib/store/noteStore"
 import { CreateNoteData } from "@/types/note";
 import toast, { Toaster } from "react-hot-toast";
 
