@@ -6,7 +6,7 @@ export default function SidebarNotes() {
   return (
       <ul className={css.menuList}>
           <li className={css.menuItem}>
-              <Link  href={`/notes/filter/all`}>All notes</Link>
+              <Link   className={css.menuLink} href={`/notes/filter/all`}>All notes</Link>
           </li>
           {tags.map((tag) => (
                <li  key={tag} className={css.menuItem}>

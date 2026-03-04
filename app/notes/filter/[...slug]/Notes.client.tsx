@@ -19,20 +19,23 @@ interface NotesClientProps {
 
 export default function NotesClient({ tag }: NotesClientProps) {
     const normalizedTag = tag === "all" ? undefined : tag;
+    const [query, setQuery] = useState('');
+    const [inputValue, setInputValue] = useState("");
+    const [currentPage, setCurrentPage] = useState(1);
+    const perPage = 12;
     
-const [query, setQuery] = useState('');
-const [currentPage, setCurrentPage] = useState(1);
- const [perPage] = useState(12);
- const debouncedSetQuery = useDebouncedCallback(
-  (value: string) => {
-setQuery(value);
-setCurrentPage(1);
-    },
-    300,
- );
+    const debouncedSetQuery = useDebouncedCallback((value: string) => {
+        setQuery(value);
+        setCurrentPage(1);
+    }, 300);
+ 
+    const handleSearch = (value: string) => {
+        setInputValue(value);
+        debouncedSetQuery(value)
+    };
   
   
-    const { data, isLoading, error, isSuccess } = useQuery({
+    const { data, isLoading, isError, isSuccess } = useQuery({
         queryKey: ["notes", query, currentPage, perPage, normalizedTag],
         queryFn: () => fetchNotes(
             { search: query, page: currentPage, perPage, tag: normalizedTag }), 
@@ -44,14 +47,14 @@ setCurrentPage(1);
     return (
         <>
             <div className={css.app}>
-                <header className={css.toolbar}> <SearchBox text={query} onSearch={debouncedSetQuery} />
+                <header className={css.toolbar}> <SearchBox text={inputValue} onSearch={handleSearch} />
             {isSuccess && (
     <Pagination page={currentPage} totalPages={data.totalPages} onPageChange={setCurrentPage}/>
                     )}
                     <Link className={css.button} href="/notes/action/create">Create note +</Link>
 </header>
   {isLoading && <Loading/>}
-  {error && <Error error={error} />}
+  {isError && <Error/>}
   {data && isSuccess && data.notes.length > 0 && <NoteList notes={data.notes}/>}
              </div>
         </>

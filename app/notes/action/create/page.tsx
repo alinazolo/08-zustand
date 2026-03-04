@@ -23,8 +23,10 @@ export const metadata: Metadata = {
     url: "https://08-zustand-blond-two.vercel.app/notes/action/create",
     images: [
       {
-        url: "https://08-zustand-blond-two.vercel.app/notes/action/create",
-        alt: "Note Hub - Create Note",
+        url: 'https://ac.goit.global/fullstack/react/notehub-og-meta.jpg',
+        width: 600,
+        height: 600,
+        alt: "note hub image",
       },
     ],
   },
